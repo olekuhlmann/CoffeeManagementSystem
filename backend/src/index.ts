@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
+import sequelize from './database';
 
 const app = express();
 const port = 5000;
@@ -12,6 +13,8 @@ app.use(bodyParser.json());
 
 app.use('/api', userRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
 });

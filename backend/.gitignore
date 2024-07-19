@@ -1,0 +1,34 @@
+# Dependency directory
+node_modules/
+
+# Compiled output
+dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# dotenv environment variable files
+.env
+.env.test
+.env.production
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# SQLite database files
+*.sqlite
+*.sqlite-journal
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*~
+
+# macOS
+.DS_Store
+
+# Other
+*.log

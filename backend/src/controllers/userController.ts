@@ -2,13 +2,14 @@
 import { Request, Response } from 'express';
 import { getUsers, addUser, addCoffee } from '../services/userService';
 
-export const getAllUsers = (req: Request, res: Response): void => {
-  res.json(getUsers());
+export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+  const users = await getUsers();
+  res.json(users);
 };
 
-export const createUser = (req: Request, res: Response): void => {
+export const createUser = async (req: Request, res: Response): Promise<void> => {
   const { name } = req.body;
-  const newUser = addUser(name);
+  const newUser = await addUser(name);
   if (newUser) {
     res.status(201).json({ message: 'User added' });
   } else {
@@ -16,9 +17,9 @@ export const createUser = (req: Request, res: Response): void => {
   }
 };
 
-export const createCoffee = (req: Request, res: Response): void => {
+export const createCoffee = async (req: Request, res: Response): Promise<void> => {
   const { buyer, receiver } = req.body;
-  if (addCoffee(buyer, receiver)) {
+  if (await addCoffee(buyer, receiver)) {
     res.status(201).json({ message: 'Coffee added' });
   } else {
     res.status(400).json({ error: 'User not found' });

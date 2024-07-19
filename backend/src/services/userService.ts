@@ -1,33 +1,28 @@
 // src/services/userService.ts
-import { User } from '../models/user';
+import User from '../models/user';
 
-const users: User[] = [];
-
-export const getUsers = (): User[] => {
-  return users;
+export const getUsers = async () => {
+  return await User.findAll();
 };
 
-export const addUser = (name: string): User | null => {
-  if (users.find(user => user.name === name)) {
+export const addUser = async (name: string) => {
+  if (await User.findByPk(name)) {
     return null;
   }
-  const newUser: User = { name, owes: {} };
-  users.push(newUser);
-  return newUser;
+  return await User.create({ name, owes: {} });
 };
 
-export const addCoffee = (buyer: string, receiver: string): boolean => {
-  const buyerUser = users.find(user => user.name === buyer);
-  const receiverUser = users.find(user => user.name === receiver);
+export const addCoffee = async (buyer: string, receiver: string) => {
+  const buyerUser = await User.findByPk(buyer);
+  const receiverUser = await User.findByPk(receiver);
 
   if (!buyerUser || !receiverUser) {
     return false;
   }
 
-  if (!buyerUser.owes[receiver]) {
-    buyerUser.owes[receiver] = 0;
-  }
-  buyerUser.owes[receiver] += 1;
+  const owes = buyerUser.owes;
+  owes[receiver] = (owes[receiver] || 0) + 1;
+  await buyerUser.update({ owes });
 
   return true;
 };
