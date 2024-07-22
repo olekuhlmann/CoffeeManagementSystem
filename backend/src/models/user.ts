@@ -1,10 +1,18 @@
 // src/models/user.ts
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../database';
+import { DataTypes, Model, Association } from 'sequelize';
+import { sequelize } from '../database';
+import CoffeeCount from './coffeeCount';
 
 class User extends Model {
   public name!: string;
-  public owes!: Record<string, number>;
+
+  public readonly sentCoffees?: CoffeeCount[];
+  public readonly receivedCoffees?: CoffeeCount[];
+
+  public static associations: {
+    sentCoffees: Association<User, CoffeeCount>;
+    receivedCoffees: Association<User, CoffeeCount>;
+  };
 }
 
 User.init(
@@ -14,15 +22,11 @@ User.init(
       allowNull: false,
       primaryKey: true,
     },
-    owes: {
-      type: DataTypes.JSON,
-      allowNull: false,
-      defaultValue: {},
-    },
   },
   {
     sequelize,
     tableName: 'users',
+    timestamps: false,
   }
 );
 

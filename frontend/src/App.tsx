@@ -22,7 +22,7 @@ const App: React.FC = () => {
   return (
     <ChakraProvider>
       <Box textAlign="center" fontSize="xl">
-        <Heading>Welcome to Coffee Management System</Heading>
+        <Heading>Coffee Management System (CMS)</Heading>
         <VStack spacing={4} mt={10}>
           <UserForm userName={userName} setUserName={setUserName} handleAddUser={handleAddUser} />
           <CoffeeForm
