@@ -5,6 +5,7 @@ import { useUsers } from './hooks/useUsers';
 import UserForm from './components/UserForm';
 import CoffeeForm from './components/CoffeeForm';
 import UserList from './components/UserList';
+import MainHeading from './components/MainHeading';
 
 const App: React.FC = () => {
   const {
@@ -20,9 +21,8 @@ const App: React.FC = () => {
   } = useUsers();
 
   return (
-    <ChakraProvider>
       <Box textAlign="center" fontSize="xl">
-        <Heading>Coffee Management System (CMS)</Heading>
+        <MainHeading>Coffee Management System (CMS)</MainHeading>
         <VStack spacing={4} mt={10}>
           <UserForm userName={userName} setUserName={setUserName} handleAddUser={handleAddUser} />
           <CoffeeForm
@@ -36,7 +36,6 @@ const App: React.FC = () => {
           <UserList users={users} />
         </VStack>
       </Box>
-    </ChakraProvider>
   );
 };
 
