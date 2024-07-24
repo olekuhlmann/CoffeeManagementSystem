@@ -33,7 +33,7 @@ const Log: React.FC<LogProps> = ({ logs }) => {
         {visibleLogs.map((log) => (
           <Box key={log.id} p={2} borderWidth="1px" borderRadius="md" width="100%">
             <Text>{log.message}</Text>
-            <Text fontSize="sm" color="gray.500">{new Date(log.createdAt).toLocaleString()}</Text>
+            <Text fontSize="sm" color="gray.500">{new Date(log.createdAt).toLocaleString('en-GB')}</Text>
           </Box>
         ))}
       </VStack>
