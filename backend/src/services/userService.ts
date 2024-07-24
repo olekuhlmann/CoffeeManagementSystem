@@ -31,13 +31,18 @@ export const getUsers = async () => {
 };
 
 export const addUser = async (name: string) => {
-  if (await User.findByPk(name)) {
+  if (!name || await User.findByPk(name)) {
     return null;
   }
   return await User.create({ name });
 };
 
 export const addCoffee = async (sender: string, receiver: string) => {
+  if (sender === receiver) {
+    console.log('Sender and receiver cannot be the same');
+    return false;
+  }
+
   const senderUser = await User.findByPk(sender);
   const receiverUser = await User.findByPk(receiver);
 

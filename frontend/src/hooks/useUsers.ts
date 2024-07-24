@@ -85,14 +85,16 @@ export const useUsers = () => {
     }
   };
 
-  const handleAddCoffee = async () => {
+  const handleAddCoffee = async (): Promise<boolean> => {
     try {
       await addCoffee(selectedUser, selectedReceiver);
       const users = await fetchUsers();
       const computedUsers = computeUserData(users);
       setUsers(computedUsers);
+      return true;
     } catch (error) {
       console.error('Error adding coffee:', error);
+      return false;
     }
   };
 

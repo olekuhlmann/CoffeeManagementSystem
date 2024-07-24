@@ -7,6 +7,7 @@ import CoffeeForm from "./components/CoffeeForm";
 import UserList from "./components/UserList";
 import MainHeading from "./components/MainHeading";
 import Accordion from "./components/Accordion";
+import CoffeeIcon from "./components/CoffeeIcon";
 
 const App: React.FC = () => {
   const {
@@ -24,7 +25,7 @@ const App: React.FC = () => {
   return (
     <Container maxW="container.md" p={4} mb={20}>
       <Box textAlign="center" fontSize="xl">
-        <MainHeading>Coffee Management System (CMS)</MainHeading>
+        <MainHeading>Coffee Management System (CMS) <CoffeeIcon/></MainHeading>
         <VStack spacing={4} mt={10}>
           <CoffeeForm
             users={users}
