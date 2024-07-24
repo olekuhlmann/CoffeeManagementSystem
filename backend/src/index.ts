@@ -13,8 +13,10 @@ app.use(bodyParser.json());
 
 app.use('/api', userRoutes);
 
-sequelize.sync({alter: true}).then(() => {
+sequelize.sync({ alter: true }).then(() => {
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });
+}).catch((error) => {
+  console.error('Failed to sync database:', error);
 });

@@ -11,9 +11,5 @@ const sequelize = new Sequelize({
 // Initialize all models
 initModels(sequelize);
 
-// Sync all models
-sequelize.sync({ force: true }).then(() => {
-  console.log('Database synchronized');
-});
 
 export default sequelize;
