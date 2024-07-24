@@ -13,7 +13,7 @@ import Login from "./components/Login";
 import { isAuthenticated } from "./services/authService";
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
     users,
@@ -31,15 +31,25 @@ const App: React.FC = () => {
   const { logs, fetchLogs } = useLogs();
 
   useEffect(() => {
-    if (isAuthenticated()) {
-      setIsLoggedIn(true);
-      fetchUsers(); 
-      fetchLogs(); 
-    }
-  }, [isLoggedIn]);
+    const checkAuth = async () => {
+      if (await isAuthenticated()) {
+        setIsLoggedIn(true);
+        await fetchUsers();
+        await fetchLogs();
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLoginSuccess = async () => {
+    setIsLoggedIn(true);
+    await fetchUsers();
+    await fetchLogs();
+  };
 
   if (!isLoggedIn) {
-    return <Login onLoginSuccess={() => setIsLoggedIn(true)} />;
+    return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (

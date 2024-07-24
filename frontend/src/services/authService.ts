@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -15,7 +14,12 @@ export const login = async (password: string) => {
   }
 };
 
-export const isAuthenticated = () => {
-  const token = Cookies.get('authToken');
-  return !!token;
-};
+export const isAuthenticated = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/auth/check`);
+      return response.status === 200;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
