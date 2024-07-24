@@ -71,15 +71,17 @@ export const useUsers = () => {
     getUsers();
   }, []);
 
-  const handleAddUser = async () => {
+  const handleAddUser = async (): Promise<boolean> => {
     try {
       await addUser(userName);
       setUserName('');
       const users = await fetchUsers();
       const computedUsers = computeUserData(users);
       setUsers(computedUsers);
+      return true;
     } catch (error) {
       console.error('Error adding user:', error);
+      return false;
     }
   };
 
