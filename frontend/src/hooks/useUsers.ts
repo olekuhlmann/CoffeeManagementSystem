@@ -1,4 +1,3 @@
-// src/hooks/useUsers.ts
 import { useState, useEffect } from 'react';
 import { fetchUsers, addUser, addCoffee } from '../services/userService';
 
@@ -71,13 +70,14 @@ export const useUsers = () => {
     getUsers();
   }, []);
 
-  const handleAddUser = async (): Promise<boolean> => {
+  const handleAddUser = async (fetchLogs: () => void): Promise<boolean> => {
     try {
       await addUser(userName);
       setUserName('');
       const users = await fetchUsers();
       const computedUsers = computeUserData(users);
       setUsers(computedUsers);
+      fetchLogs(); // Fetch logs after adding user
       return true;
     } catch (error) {
       console.error('Error adding user:', error);
@@ -85,12 +85,13 @@ export const useUsers = () => {
     }
   };
 
-  const handleAddCoffee = async (): Promise<boolean> => {
+  const handleAddCoffee = async (fetchLogs: () => void): Promise<boolean> => {
     try {
       await addCoffee(selectedUser, selectedReceiver);
       const users = await fetchUsers();
       const computedUsers = computeUserData(users);
       setUsers(computedUsers);
+      fetchLogs(); // Fetch logs after adding coffee
       return true;
     } catch (error) {
       console.error('Error adding coffee:', error);

@@ -1,5 +1,5 @@
 // src/services/userService.ts
-import { User, CoffeeCount } from '../database';
+import { User, CoffeeCount, Log } from '../models';
 
 export const getUsers = async () => {
   const users = await User.findAll({
@@ -34,7 +34,9 @@ export const addUser = async (name: string) => {
   if (!name || await User.findByPk(name)) {
     return null;
   }
-  return await User.create({ name });
+  const user = await User.create({ name });
+  await Log.create({ message: `User ${name} was created` });
+  return user;
 };
 
 export const addCoffee = async (sender: string, receiver: string) => {
@@ -59,6 +61,8 @@ export const addCoffee = async (sender: string, receiver: string) => {
   } else {
     await CoffeeCount.create({ sender, receiver, count: 1 });
   }
+
+  await Log.create({ message: `${sender} bought a coffee for ${receiver}` });
 
   console.log('Coffee transaction successful');
   return true;

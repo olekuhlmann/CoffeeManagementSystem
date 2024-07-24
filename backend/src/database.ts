@@ -1,21 +1,19 @@
 // src/database.ts
 import { Sequelize } from 'sequelize';
+import { initModels } from './models';
 
 // Initialize Sequelize instance
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite'
+  storage: './database.sqlite',
 });
 
-// Import models after initializing Sequelize
-import User from './models/user';
-import CoffeeCount from './models/coffeeCount';
+// Initialize all models
+initModels(sequelize);
 
-// Define associations after importing models
-User.hasMany(CoffeeCount, { foreignKey: 'sender', as: 'sentCoffees' });
-User.hasMany(CoffeeCount, { foreignKey: 'receiver', as: 'receivedCoffees' });
-CoffeeCount.belongsTo(User, { foreignKey: 'sender', as: 'senderUser' });
-CoffeeCount.belongsTo(User, { foreignKey: 'receiver', as: 'receiverUser' });
+// Sync all models
+sequelize.sync({ force: true }).then(() => {
+  console.log('Database synchronized');
+});
 
-export { sequelize, User, CoffeeCount };
 export default sequelize;
