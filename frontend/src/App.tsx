@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Container, VStack } from "@chakra-ui/react";
 import { useUsers } from "./hooks/useUsers";
 import { useLogs } from "./hooks/useLogs";
@@ -9,8 +9,12 @@ import MainHeading from "./components/MainHeading";
 import Accordion from "./components/Accordion";
 import CoffeeIcon from "./components/CoffeeIcon";
 import Log from "./components/Log";
+import Login from "./components/Login";
+import { isAuthenticated } from "./services/authService";
 
 const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+
   const {
     users,
     userName,
@@ -21,9 +25,22 @@ const App: React.FC = () => {
     setSelectedReceiver,
     handleAddUser,
     handleAddCoffee,
+    fetchUsers,
   } = useUsers();
 
   const { logs, fetchLogs } = useLogs();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setIsLoggedIn(true);
+      fetchUsers(); 
+      fetchLogs(); 
+    }
+  }, [isLoggedIn]);
+
+  if (!isLoggedIn) {
+    return <Login onLoginSuccess={() => setIsLoggedIn(true)} />;
+  }
 
   return (
     <Container maxW="container.md" p={4} mb={20}>

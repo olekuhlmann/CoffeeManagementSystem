@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchUsers, addUser, addCoffee } from '../services/userService';
+import { fetchUsers as fetchUsersService, addUser, addCoffee } from '../services/userService';
 
 export type CoffeeTransaction = {
   sender: string;
@@ -56,27 +56,25 @@ export const useUsers = () => {
     });
   };
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const users = await fetchUsers();
-        const computedUsers = computeUserData(users);
-        setUsers(computedUsers);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
+  const fetchUsers = async () => {
+    try {
+      const users = await fetchUsersService();
+      const computedUsers = computeUserData(users);
+      setUsers(computedUsers);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
-    getUsers();
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   const handleAddUser = async (fetchLogs: () => void): Promise<boolean> => {
     try {
       await addUser(userName);
       setUserName('');
-      const users = await fetchUsers();
-      const computedUsers = computeUserData(users);
-      setUsers(computedUsers);
+      await fetchUsers();
       fetchLogs(); // Fetch logs after adding user
       return true;
     } catch (error) {
@@ -88,9 +86,7 @@ export const useUsers = () => {
   const handleAddCoffee = async (fetchLogs: () => void): Promise<boolean> => {
     try {
       await addCoffee(selectedUser, selectedReceiver);
-      const users = await fetchUsers();
-      const computedUsers = computeUserData(users);
-      setUsers(computedUsers);
+      await fetchUsers();
       fetchLogs(); // Fetch logs after adding coffee
       return true;
     } catch (error) {
@@ -109,5 +105,6 @@ export const useUsers = () => {
     setSelectedReceiver,
     handleAddUser,
     handleAddCoffee,
+    fetchUsers, 
   };
 };
