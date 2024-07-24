@@ -4,14 +4,10 @@ import {
   Input,
   IconButton,
   Spinner,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Collapse,
-  useToast
+  useToast,
 } from '@chakra-ui/react';
-import { AddIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { AddIcon, CheckIcon } from "@chakra-ui/icons";
+import StatusAlert from './StatusAlert';
 
 type UserFormProps = {
   userName: string;
@@ -47,29 +43,22 @@ const UserForm: React.FC<UserFormProps> = ({ userName, setUserName, handleAddUse
 
   return (
     <>
-    <Box display="flex" alignItems="center" width="100%">
-      <Input
-        placeholder="Add a new user"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        isDisabled={isLoading}
-        mr={2}
-      />
-      <IconButton
-        aria-label="Add User"
-        icon={isLoading ? <Spinner /> : status === 'success' ? <CheckIcon /> : status === 'error' ? <AddIcon/> : <AddIcon/>}
-        onClick={handleSubmit}
-        isDisabled={isLoading}
-      />
-    </Box>
-    <Collapse in={status === 'error'} animateOpacity>
-    <Box>
-        <Alert status="error" mt={2} rounded="md" marginTop={4}>
-          <AlertIcon />
-          <AlertDescription>Failed to add user. The name may already exist or there is no internet connection.</AlertDescription>
-        </Alert>
+      <Box display="flex" alignItems="center" width="100%">
+        <Input
+          placeholder="Add a new user"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          isDisabled={isLoading}
+          mr={2}
+        />
+        <IconButton
+          aria-label="Add User"
+          icon={isLoading ? <Spinner /> : status === 'success' ? <CheckIcon /> : <AddIcon />}
+          onClick={handleSubmit}
+          isDisabled={isLoading}
+        />
       </Box>
-      </Collapse>
+      <StatusAlert status={status} message="Failed to add user." />
     </>
   );
 };

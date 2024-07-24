@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Select,
-  IconButton,
-  Spinner,
-  useToast,
-  Collapse,
-  Alert,
-  AlertIcon,
-  AlertDescription
-} from '@chakra-ui/react';
-import { CheckIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
-import { User } from '../hooks/useUsers';
+import React, { useState } from "react";
+import { Box, Select, IconButton, Spinner, useToast } from "@chakra-ui/react";
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { User } from "../hooks/useUsers";
+import StatusAlert from "./StatusAlert";
 
 type CoffeeFormProps = {
   users: User[];
@@ -31,34 +22,39 @@ const CoffeeForm: React.FC<CoffeeFormProps> = ({
   handleAddCoffee,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const toast = useToast();
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    setStatus('idle');
+    setStatus("idle");
     const result = await handleAddCoffee();
     setIsLoading(false);
 
     if (result) {
-      setStatus('success');
+      setStatus("success");
       toast({
-        title: 'Coffee added.',
+        title: "Coffee added.",
         description: `${selectedUser} bought a coffee for ${selectedReceiver}.`,
-        status: 'success',
+        status: "success",
         duration: 5000,
         isClosable: true,
       });
-      setSelectedUser('');
-      setSelectedReceiver('');
+      setSelectedUser("");
+      setSelectedReceiver("");
     } else {
-      setStatus('error');
+      setStatus("error");
     }
   };
 
   return (
     <>
-      <Box display="flex" alignItems="center" width="100%" justifyContent="center">
+      <Box
+        display="flex"
+        alignItems="center"
+        width="100%"
+        justifyContent="center"
+      >
         <Select
           placeholder="..."
           value={selectedUser}
@@ -90,19 +86,22 @@ const CoffeeForm: React.FC<CoffeeFormProps> = ({
         </Select>
         <IconButton
           aria-label="Add Coffee"
-          icon={isLoading ? <Spinner /> : status === 'success' ? <CheckIcon /> : status === 'error' ? <CloseIcon /> : <AddIcon />}
+          icon={
+            isLoading ? (
+              <Spinner />
+            ) : status === "success" ? (
+              <CheckIcon />
+            ) : status === "error" ? (
+              <CloseIcon />
+            ) : (
+              <AddIcon />
+            )
+          }
           onClick={handleSubmit}
           isDisabled={isLoading}
         />
       </Box>
-      <Collapse in={status === 'error'} animateOpacity>
-        <Box>
-          <Alert status="error" mt={2} rounded="md" marginTop={4}>
-            <AlertIcon />
-            <AlertDescription>Something went wrong.</AlertDescription>
-          </Alert>
-        </Box>
-      </Collapse>
+      <StatusAlert status={status} message="Could not add coffee." />
     </>
   );
 };
