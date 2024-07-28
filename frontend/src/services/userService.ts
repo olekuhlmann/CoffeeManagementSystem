@@ -1,7 +1,6 @@
 // src/services/userService.ts
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../config';
 
 export const fetchUsers = async () => {
   try {

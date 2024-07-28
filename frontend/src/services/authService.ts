@@ -1,6 +1,6 @@
+// src/services/authService.ts
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../config';
 
 axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
 
@@ -15,11 +15,11 @@ export const login = async (password: string) => {
 };
 
 export const isAuthenticated = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/auth/check`);
-      return response.status === 200;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
+  try {
+    const response = await axios.get(`${API_URL}/auth/check`);
+    return response.status === 200;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};

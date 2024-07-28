@@ -1,13 +1,18 @@
+// src/hooks/useLogs.ts
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchLogs as fetchLogsService } from '../services/logService';
 import { LogEntry } from '../types/logEntry';
 
 export const useLogs = () => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
 
   const fetchLogs = async () => {
-    const response = await axios.get('http://localhost:5000/api/logs');
-    setLogs(response.data);
+    try {
+      const logs = await fetchLogsService();
+      setLogs(logs);
+    } catch (error) {
+      console.error('Error fetching logs:', error);
+    }
   };
 
   useEffect(() => {
