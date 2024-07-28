@@ -1,0 +1,32 @@
+{
+    "name": "coffee-management-system",
+    "scripts": {
+      "postdeploy": "cd backend && npm install && npm run build"
+    },
+    "env": {
+      "SECRET_PASSWORD": {
+        "description": "The secret password for authentication",
+        "required": true
+      },
+      "JWT_SECRET": {
+        "description": "The secret key for JWT",
+        "required": true
+      },
+      "FRONTEND_URL": {
+        "description": "The URL of the frontend",
+        "required": true
+      }
+    },
+    "formation": {
+      "web": {
+        "quantity": 1,
+        "size": "free"
+      }
+    },
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ]
+  }
+  
