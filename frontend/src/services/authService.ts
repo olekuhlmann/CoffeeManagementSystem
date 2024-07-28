@@ -1,12 +1,11 @@
 // src/services/authService.ts
-import axios from 'axios';
-import { API_URL } from '../config';
-
-axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
+import api from './api';
 
 export const login = async (password: string) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, { password });
+    const response = await api.post('/auth/login', { password });
+    const { token } = response.data;
+    localStorage.setItem('authToken', token);
     return response.status === 200;
   } catch (error) {
     console.error(error);
@@ -15,8 +14,11 @@ export const login = async (password: string) => {
 };
 
 export const isAuthenticated = async () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return false;
+
   try {
-    const response = await axios.get(`${API_URL}/auth/check`);
+    const response = await api.get('/auth/check');
     return response.status === 200;
   } catch (error) {
     console.error(error);

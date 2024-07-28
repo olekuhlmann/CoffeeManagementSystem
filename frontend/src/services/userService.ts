@@ -1,10 +1,9 @@
 // src/services/userService.ts
-import axios from 'axios';
-import { API_URL } from '../config';
+import api from './api';
 
 export const fetchUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/users`);
+    const response = await api.get('/users');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -14,7 +13,7 @@ export const fetchUsers = async () => {
 
 export const addUser = async (name: string) => {
   try {
-    const response = await axios.post(`${API_URL}/users`, { name });
+    const response = await api.post('/users', { name });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -24,7 +23,7 @@ export const addUser = async (name: string) => {
 
 export const addCoffee = async (buyer: string, receiver: string) => {
   try {
-    const response = await axios.post(`${API_URL}/coffees`, { buyer, receiver });
+    const response = await api.post('/coffees', { buyer, receiver });
     return response.data;
   } catch (error) {
     console.error(error);
