@@ -10,7 +10,7 @@ import { authenticateToken } from './middleware/authMiddleware';
 import rateLimit from 'express-rate-limit';
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -20,7 +20,7 @@ const limiter = rateLimit({
 
 // Configure CORS to allow requests from your frontend origin and credentials
 const corsOptions = {
-  origin: 'http://localhost:5173', // Update this to match your frontend origin
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173', 
   credentials: true,
 };
 
@@ -37,7 +37,7 @@ app.use('/api', authenticateToken, userRoutes);
 
 sequelize.sync({ alter: true }).then(() => {
   app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
   });
 }).catch((error) => {
   console.error('Failed to sync database:', error);
