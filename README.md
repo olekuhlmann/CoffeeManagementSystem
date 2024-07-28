@@ -28,6 +28,12 @@ This is where the Coffe Management System (CMS) comes in. This web application a
 
 Upon entering the web application for the first time, you will be prompted to enter the ```SECRET_PASSWORD``` used above. A secure cookie will be set in the browser for 90 days to allow access without entering the password.
 
+## Demo
+
+https://github.com/user-attachments/assets/2485bee0-5415-42df-891f-c0ca16d52358
+
+
+
 ## Author
 
 Ole Kuhlmann  
