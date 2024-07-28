@@ -32,3 +32,4 @@ yarn-error.log*
 
 # Other
 *.log
+.push_details
