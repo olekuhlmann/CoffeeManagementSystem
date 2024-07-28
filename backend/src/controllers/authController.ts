@@ -11,7 +11,7 @@ export const login = (req: Request, res: Response) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Set to true in production
-      sameSite: 'none',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : "lax",
       maxAge: 90 * 24 * 60 * 60 * 1000, // 90 days
     });
     res.status(200).json({ message: 'Login successful' });
