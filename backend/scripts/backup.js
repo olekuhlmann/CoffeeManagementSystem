@@ -17,7 +17,7 @@ require('dotenv').config();
 const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN, fetch });
 
 const backupDatabase = async () => {
-  const dbPath = path.resolve(__dirname, '../database.sqlite');
+  const dbPath = path.resolve(__dirname, '../tmp/database.sqlite');
   const backupPath = `/backups/backup_${new Date().toISOString().replace(/:/g, '-')}.sqlite`;
 
   try {

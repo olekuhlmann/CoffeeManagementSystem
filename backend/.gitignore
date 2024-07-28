@@ -30,6 +30,10 @@ yarn-error.log*
 # macOS
 .DS_Store
 
+# Ignore database file
+tmp/database.sqlite
+tmp
+
 # Other
 *.log
 .push_details
