@@ -4,8 +4,12 @@ import { initModels } from './models';
 import path from 'path';
 import fs from 'fs';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // Define the database path
-const dbPath = path.resolve(__dirname, '../tmp/database.sqlite');
+const dbPath = isProduction 
+  ? path.resolve('/mnt/persistent-disk/database.sqlite')
+  : path.resolve(__dirname, '../tmp/database.sqlite'); 
 
 // Ensure the database directory exists
 const dbDir = path.dirname(dbPath);
