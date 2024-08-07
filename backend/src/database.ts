@@ -12,7 +12,7 @@ const sequelize = new Sequelize(databaseUrl, {
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: isProduction,
+      rejectUnauthorized: false,
     }
   },
 });
