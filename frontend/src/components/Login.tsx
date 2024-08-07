@@ -24,11 +24,11 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent form from submitting the traditional way
-    const success = await login(password);
-    if (success) {
+    const result = await login(password);
+    if (result.success) {
       onLoginSuccess();
     } else {
-      setError('Invalid password');
+      setError(result.error || 'An unexpected error occurred');
     }
   };
 
