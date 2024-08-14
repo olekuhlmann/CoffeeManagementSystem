@@ -6,10 +6,13 @@ This is where the Coffe Management System (CMS) comes in. This web application a
 
 ## Installation
 
-1. **Clone this repository** and set up a `.env` file in the `backend` directory:
+1. **Setup a local PostgreSQL database**, see [here](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database).
+
+2. **Clone this repository** and set up a `.env` file in the `backend` directory:
     ```sh
     SECRET_PASSWORD=put_a_password_here
     JWT_SECRET=put_a_JWT_secret_here
+    DATABASE_URL=postgres://username:password@hostname:port/databasename
     ```
 
 2. **Install dependencies and start the backend**
