@@ -1,5 +1,5 @@
 // src/config.ts
 
 export const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://coffee-management-system-8c4f537c6eab.herokuapp.com/api'
+  ? 'https://l6xe0morxf.execute-api.eu-central-1.amazonaws.com/default/aws-coffee-management-system-backend-lambda"'
   : 'http://localhost:5000/api';
