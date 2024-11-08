@@ -4,7 +4,7 @@ import { API_URL } from '../config';
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true, // Optional, depends on your setup
+  withCredentials: true,
 });
 
 // Add a request interceptor to include the token in headers

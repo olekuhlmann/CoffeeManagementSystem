@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes';
 import sequelize from './database';
 import { authenticateToken } from './middleware/authMiddleware';
 import rateLimit from 'express-rate-limit';
+import serverless from 'serverless-http';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -35,10 +36,16 @@ app.use('/api/auth', authRoutes);
 // Protected routes
 app.use('/api', authenticateToken, userRoutes);
 
-sequelize.sync({ alter: true }).then(() => {
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+// Sync database and start Express server locally
+if (process.env.IS_LOCAL) {
+  sequelize.sync({ alter: true }).then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  }).catch((error) => {
+    console.error('Failed to sync database:', error);
   });
-}).catch((error) => {
-  console.error('Failed to sync database:', error);
-});
+}
+
+// Export the Lambda handler for serverless deployment
+export const handler = serverless(app);

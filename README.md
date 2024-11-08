@@ -13,6 +13,7 @@ This is where the Coffe Management System (CMS) comes in. This web application a
     SECRET_PASSWORD=put_a_password_here
     JWT_SECRET=put_a_JWT_secret_here
     DATABASE_URL=postgres://username:password@hostname:port/databasename
+    IS_LOCAL=true
     ```
 
 2. **Install dependencies and start the backend**
