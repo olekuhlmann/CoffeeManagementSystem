@@ -47,5 +47,7 @@ if (process.env.IS_LOCAL) {
   });
 }
 
-// Export the Lambda handler for serverless deployment
-export const handler = serverless(app);
+// Export the Lambda handler for serverless deployment TODO BREAKS LOCAL CODE
+exports.handler = serverless(app, {
+  basePath: '/default/aws-coffee-management-system-backend-lambda',
+});
