@@ -35,7 +35,7 @@ For a local installation, follow these steps.
 Upon entering the web application for the first time, you will be prompted to enter the ```SECRET_PASSWORD``` used above. A secure token will be saved in the browser for 90 days to allow access without entering the password.
 
 For deployment to a hosting service, replace the appropiate HTTP endpoints in the frontend & backend and follow the necessary steps outlined by the hosting service.
-The CMS is deployed to AWS with an API Gateway, serverless Lambda function, and PostgreSQL database.
+The CMS is deployed to AWS with an API Gateway, serverless Lambda function, and PostgreSQL database. The frontend is hosted using GitHub Pages.
 
 ## Demo
 
