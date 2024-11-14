@@ -21,7 +21,7 @@ const limiter = rateLimit({
 
 // Configure CORS to allow requests from your frontend origin and credentials
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', 
+  origin: process.env.FRONTEND_URL || ['http://localhost:5173', 'http://127.0.0.1:5173'], 
   credentials: true,
 };
 
