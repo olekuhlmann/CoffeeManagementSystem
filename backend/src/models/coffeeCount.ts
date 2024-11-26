@@ -1,28 +1,38 @@
 // src/models/coffeeCount.ts
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, Model, Sequelize, Association } from 'sequelize';
+import User from './user';
 
 class CoffeeCount extends Model {
-  public sender!: string;
-  public receiver!: string;
+  public senderId!: number;
+  public receiverId!: number;
   public count!: number;
+
+ 
+  public sender?: User; 
+  public receiver?: User; 
+
+  public static associations: {
+    sender: Association<CoffeeCount, User>;
+    receiver: Association<CoffeeCount, User>;
+  };
 
   static initModel(sequelize: Sequelize) {
     CoffeeCount.init(
       {
-        sender: {
-          type: DataTypes.STRING,
+        senderId: {
+          type: DataTypes.INTEGER,
           allowNull: false,
           references: {
-            model: 'users',
-            key: 'name',
+            model: User,
+            key: 'id',
           },
         },
-        receiver: {
-          type: DataTypes.STRING,
+        receiverId: {
+          type: DataTypes.INTEGER,
           allowNull: false,
           references: {
-            model: 'users',
-            key: 'name',
+            model: User,
+            key: 'id',
           },
         },
         count: {

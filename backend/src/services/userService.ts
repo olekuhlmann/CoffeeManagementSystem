@@ -7,12 +7,26 @@ export const getUsers = async () => {
       {
         model: CoffeeCount,
         as: 'sentCoffees',
-        attributes: ['receiver', 'count'],
+        include: [
+          {
+            model: User, 
+            as: 'receiver',
+            attributes: ['name'],
+          },
+        ],
+        attributes: ['count'],
       },
       {
         model: CoffeeCount,
         as: 'receivedCoffees',
-        attributes: ['sender', 'count'],
+        include: [
+          {
+            model: User, 
+            as: 'sender',
+            attributes: ['name'],
+          },
+        ],
+        attributes: ['count'],
       },
     ],
   });
@@ -20,18 +34,19 @@ export const getUsers = async () => {
   return users.map(user => ({
     name: user.name,
     sentCoffees: user.sentCoffees?.map(coffee => ({
-      receiver: coffee.receiver,
+      receiver: coffee.receiver?.name || null, 
       count: coffee.count,
     })) || [],
     receivedCoffees: user.receivedCoffees?.map(coffee => ({
-      sender: coffee.sender,
+      sender: coffee.sender?.name || null, 
       count: coffee.count,
     })) || [],
-  }));
+  })).sort((a, b) => a.name.localeCompare(b.name));
 };
 
+
 export const addUser = async (name: string) => {
-  if (!name || await User.findByPk(name)) {
+  if (!name || await User.findOne({ where: { name } })) {
     return null;
   }
   const user = await User.create({ name });
@@ -39,30 +54,32 @@ export const addUser = async (name: string) => {
   return user;
 };
 
-export const addCoffee = async (sender: string, receiver: string) => {
-  if (sender === receiver) {
+export const addCoffee = async (senderName: string, receiverName: string) => {
+  if (senderName === receiverName) {
     console.log('Sender and receiver cannot be the same');
     return false;
   }
 
-  const senderUser = await User.findByPk(sender);
-  const receiverUser = await User.findByPk(receiver);
+  const sender = await User.findOne({ where: { name: senderName } });
+  const receiver = await User.findOne({ where: { name: receiverName } });
 
-  if (!senderUser || !receiverUser) {
+  if (!sender || !receiver) {
     console.log('Sender or receiver not found');
     return false;
   }
 
-  const coffeeRecord = await CoffeeCount.findOne({ where: { sender, receiver } });
+  const coffeeRecord = await CoffeeCount.findOne({
+    where: { senderId: sender.id, receiverId: receiver.id },
+  });
 
   if (coffeeRecord) {
     coffeeRecord.count += 1;
     await coffeeRecord.save();
   } else {
-    await CoffeeCount.create({ sender, receiver, count: 1 });
+    await CoffeeCount.create({ senderId: sender.id, receiverId: receiver.id, count: 1 });
   }
 
-  await Log.create({ message: `${sender} bought a coffee for ${receiver}` });
+  await Log.create({ message: `${senderName} bought a coffee for ${receiverName}` });
 
   console.log('Coffee transaction successful');
   return true;
