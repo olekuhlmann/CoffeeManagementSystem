@@ -34,18 +34,22 @@ class Log extends Model {
           allowNull: false,
         },
         userId: {
+          field: 'userid',
           type: DataTypes.INTEGER,
           allowNull: true, // Conditionally required for 'createUser'
         },
         senderId: {
+          field: 'senderid',
           type: DataTypes.INTEGER,
           allowNull: true, // Conditionally required for 'logCoffee'
         },
         receiverId: {
+          field: 'receiverid',
           type: DataTypes.INTEGER,
           allowNull: true, // Conditionally required for 'logCoffee'
         },
         createdAt: {
+          field: 'createdat',
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,

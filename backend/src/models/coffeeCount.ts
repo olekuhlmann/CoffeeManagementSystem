@@ -20,6 +20,7 @@ class CoffeeCount extends Model {
     CoffeeCount.init(
       {
         senderId: {
+          field: 'senderid',
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
@@ -28,6 +29,7 @@ class CoffeeCount extends Model {
           },
         },
         receiverId: {
+          field: 'receiverid',
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
