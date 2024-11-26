@@ -10,10 +10,15 @@ const initModels = (sequelize: Sequelize) => {
   Log.initModel(sequelize);
 
   // Define associations
-  User.hasMany(CoffeeCount, { foreignKey: 'sender', as: 'sentCoffees' });
-  User.hasMany(CoffeeCount, { foreignKey: 'receiver', as: 'receivedCoffees' });
-  CoffeeCount.belongsTo(User, { foreignKey: 'sender', as: 'senderUser' });
-  CoffeeCount.belongsTo(User, { foreignKey: 'receiver', as: 'receiverUser' });
+  User.hasMany(CoffeeCount, { foreignKey: 'senderid', as: 'sentCoffees' });
+  User.hasMany(CoffeeCount, { foreignKey: 'receiverid', as: 'receivedCoffees' });
+  CoffeeCount.belongsTo(User, { foreignKey: 'senderid', as: 'sender' });
+  CoffeeCount.belongsTo(User, { foreignKey: 'receiverid', as: 'receiver' });
+
+  Log.belongsTo(User, { foreignKey: 'userid', as: 'user' });
+  Log.belongsTo(User, { foreignKey: 'senderid', as: 'sender' });
+  Log.belongsTo(User, { foreignKey: 'receiverid', as: 'receiver' });
+  
 };
 
 export { User, CoffeeCount, Log, initModels };
