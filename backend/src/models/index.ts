@@ -14,6 +14,11 @@ const initModels = (sequelize: Sequelize) => {
   User.hasMany(CoffeeCount, { foreignKey: 'receiverId', as: 'receivedCoffees' });
   CoffeeCount.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
   CoffeeCount.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' });
+
+  Log.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+  Log.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+  Log.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' });
+  
 };
 
 export { User, CoffeeCount, Log, initModels };

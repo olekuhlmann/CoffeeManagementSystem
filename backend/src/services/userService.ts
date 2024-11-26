@@ -50,7 +50,7 @@ export const addUser = async (name: string) => {
     return null;
   }
   const user = await User.create({ name });
-  await Log.create({ message: `User ${name} was created` });
+  await Log.create({ type: 'createUser', userId: user.id });
   return user;
 };
 
@@ -79,7 +79,7 @@ export const addCoffee = async (senderName: string, receiverName: string) => {
     await CoffeeCount.create({ senderId: sender.id, receiverId: receiver.id, count: 1 });
   }
 
-  await Log.create({ message: `${senderName} bought a coffee for ${receiverName}` });
+  await Log.create({ type: 'logCoffee', senderId: sender.id, receiverId: receiver.id });
 
   console.log('Coffee transaction successful');
   return true;
