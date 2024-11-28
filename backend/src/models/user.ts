@@ -1,6 +1,6 @@
 // src/models/user.ts
 import { DataTypes, Model, Sequelize } from 'sequelize';
-import CoffeeCount from './coffeeCount';
+import {CoffeeCount} from './coffeeCount';
 
 class User extends Model {
   public id!: number;

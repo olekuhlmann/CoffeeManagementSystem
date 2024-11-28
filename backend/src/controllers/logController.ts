@@ -2,6 +2,17 @@
 import { Request, Response } from 'express';
 import { Log, User } from '../models';
 
+
+/**
+ * Retrieves logs from the database, formats them into string messages, and sends them as a JSON response.
+ * 
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns A promise that resolves to void.
+ * 
+ * The logs are retrieved with associated user information and ordered by creation date in descending order.
+ * The logs are then formatted into human-readable messages.
+ */
 export const getLogs = async (req: Request, res: Response): Promise<void> => {
     const logs = await Log.findAll({
         include: [
