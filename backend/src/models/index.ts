@@ -1,12 +1,13 @@
 // src/models/index.ts
 import { Sequelize } from 'sequelize';
 import User from './user';
-import CoffeeCount from './coffeeCount';
+import { CoffeeCount, CoffeeCountSimplified } from './coffeeCount';
 import Log from './log';
 
 const initModels = (sequelize: Sequelize) => {
   User.initModel(sequelize);
   CoffeeCount.initModel(sequelize);
+  CoffeeCountSimplified.initModel(sequelize);
   Log.initModel(sequelize);
 
   // Define associations
