@@ -70,12 +70,12 @@ export const useUsers = () => {
     fetchUsers();
   }, []);
 
-  const handleAddUser = async (fetchLogs: () => void): Promise<boolean> => {
+  const handleAddUser = async (fetchLogs: () => Promise<void>): Promise<boolean> => {
     try {
       await addUser(userName);
       setUserName('');
       await fetchUsers();
-      fetchLogs(); // Fetch logs after adding user
+      await fetchLogs(); 
       return true;
     } catch (error) {
       console.error('Error adding user:', error);
@@ -83,11 +83,11 @@ export const useUsers = () => {
     }
   };
 
-  const handleAddCoffee = async (fetchLogs: () => void): Promise<boolean> => {
+  const handleAddCoffee = async (fetchLogs: () => Promise<void>): Promise<boolean> => {
     try {
       await addCoffee(selectedUser, selectedReceiver);
       await fetchUsers();
-      fetchLogs(); // Fetch logs after adding coffee
+      await fetchLogs(); 
       return true;
     } catch (error) {
       console.error('Error adding coffee:', error);

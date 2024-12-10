@@ -12,6 +12,7 @@ import { getUsers, addUser } from '../services/userService';
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   const users = await getUsers();
   res.json(users);
+  console.log('Users sent');
 };
 
 /**

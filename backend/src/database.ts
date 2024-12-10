@@ -8,7 +8,7 @@ const databaseUrl = process.env.DATABASE_URL || "please provide a DATABASE_URL";
 const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
   protocol: 'postgres',
-  logging: !isProduction, // Enable logging only in development
+  logging: false,// !isProduction
   dialectOptions: {
     ssl: {
       require: true,

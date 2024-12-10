@@ -1,5 +1,5 @@
 // src/services/userService.ts
-import { User, CoffeeCount, Log } from '../models';
+import { User, CoffeeCount, CoffeeCountSimplified, Log } from '../models';
 
 /**
  * Retrieves a list of users with their coffee transaction details.
@@ -13,38 +13,78 @@ import { User, CoffeeCount, Log } from '../models';
  * A promise that resolves to an array of users with their coffee transaction details.
  */
 export const getUsers = async (): Promise<Array<{ name: string; sentCoffees: Array<{ receiver: string | null; count: number; }>; receivedCoffees: Array<{ sender: string | null; count: number; }>; }>> => {
-  const users = await getUsersWithCoffeeCount();
+  const users = await getUsersWithSimplifiedCoffeeCount();
 
   // Map the users to a processed format for the frontend
   return users.map(user => ({
     name: user.name,
-    sentCoffees: user.sentCoffees?.map(coffee => ({
-      receiver: coffee.receiver?.name || null, 
+    sentCoffees: user.sentCoffeesSimplified?.map(coffee => ({
+      receiver: coffee.receiver?.name || null,
       count: coffee.count,
     })) || [],
-    receivedCoffees: user.receivedCoffees?.map(coffee => ({
-      sender: coffee.sender?.name || null, 
+    receivedCoffees: user.receivedCoffeesSimplified?.map(coffee => ({
+      sender: coffee.sender?.name || null,
       count: coffee.count,
     })) || [],
   })).sort((a, b) => a.name.localeCompare(b.name));
 };
 
 /**
- * Retrieves all users along with their sent and received coffee counts.
+ * Retrieves all users along with their simplified sent and received coffee counts.
  * Each user object includes the user, an array of sent coffees with receiver ids, names, and counts,
  * and an array of received coffees with sender names and counts.
  *
  * @returns {Promise<Array<User>>} A promise that resolves to an array of user objects with coffee counts.
  */
-export const getUsersWithCoffeeCount = async (): Promise<Array<User>> => {
+export const getUsersWithSimplifiedCoffeeCount = async (): Promise<Array<User>> => {
+  const users = await User.findAll({
+    include: [
+      {
+        model: CoffeeCountSimplified,
+        as: 'sentCoffeesSimplified',
+        include: [
+          {
+            model: User,
+            as: 'receiver',
+            attributes: ['id', 'name'],
+          },
+        ],
+        attributes: ['count'],
+      },
+      {
+        model: CoffeeCountSimplified,
+        as: 'receivedCoffeesSimplified',
+        include: [
+          {
+            model: User,
+            as: 'sender',
+            attributes: ['id', 'name'],
+          },
+        ],
+        attributes: ['count'],
+      },
+    ],
+  });
+
+  return users;
+}
+
+/**
+ * Retrieves all users along with their raw sent and received coffee counts.
+ * Each user object includes the user, an array of sent coffees with receiver ids, names, and counts,
+ * and an array of received coffees with sender names and counts.
+ *
+ * @returns {Promise<Array<User>>} A promise that resolves to an array of user objects with coffee counts.
+ */
+export const getUsersWithRawCoffeeCount = async (): Promise<Array<User>> => {
   const users = await User.findAll({
     include: [
       {
         model: CoffeeCount,
-        as: 'sentCoffees',
+        as: 'sentCoffeesRaw',
         include: [
           {
-            model: User, 
+            model: User,
             as: 'receiver',
             attributes: ['id', 'name'],
           },
@@ -53,10 +93,10 @@ export const getUsersWithCoffeeCount = async (): Promise<Array<User>> => {
       },
       {
         model: CoffeeCount,
-        as: 'receivedCoffees',
+        as: 'receivedCoffeesRaw',
         include: [
           {
-            model: User, 
+            model: User,
             as: 'sender',
             attributes: ['id', 'name'],
           },
