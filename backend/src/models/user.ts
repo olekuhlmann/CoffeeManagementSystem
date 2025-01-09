@@ -1,12 +1,14 @@
 // src/models/user.ts
 import { DataTypes, Model, Sequelize } from 'sequelize';
-import CoffeeCount from './coffeeCount';
+import {CoffeeCount} from './coffeeCount';
 
 class User extends Model {
   public id!: number;
   public name!: string;
-  public readonly sentCoffees?: CoffeeCount[];
-  public readonly receivedCoffees?: CoffeeCount[];
+  public readonly sentCoffeesRaw?: CoffeeCount[];
+  public readonly sentCoffeesSimplified?: CoffeeCount[];
+  public readonly receivedCoffeesRaw?: CoffeeCount[];
+  public readonly receivedCoffeesSimplified?: CoffeeCount[];
 
   static initModel(sequelize: Sequelize) {
     User.init(
