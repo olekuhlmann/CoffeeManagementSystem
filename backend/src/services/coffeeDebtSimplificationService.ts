@@ -25,36 +25,7 @@ export const simplifyCoffeeDebts = (users: Array<User>): Array<{ senderId: numbe
     // Get the highest id of all users
     const maxUserId = Math.max(...users.map(user => user.id));
 
-    // create hash map of visited edges
-    const visitedEdges = new Set<string>();
-
-    let nextEdge = getNextEdge(edges, visitedEdges);
-
-    // visit all edges and simplify debts by applying max-flow to that edge
-    while (nextEdge) {
-        // create a graph with all the edges
-        const graph = new CustomDinic();
-        graph.init(nextEdge.from, nextEdge.to, maxUserId+1);
-        edges.forEach(edge => {
-            graph.addEdge(edge.from, edge.to, edge.count); 
-        });
-
-        // get max-flow for the edge
-        const maxflow = graph.maxflow();
-
-        // create residual graph only with forward edges
-        const new_edges = graph.residualGraphForward();
-
-        // add a new edge with the maxflow value
-        if (maxflow > 0)
-            new_edges.push({ from: nextEdge.from, to: nextEdge.to, count: maxflow });
-
-        // update the edges array for next iteration
-        edges = new_edges;
-
-        // get next edge for next iteration
-        nextEdge = getNextEdge(edges, visitedEdges);
-    }
+    edges = simplifyEdges(edges, maxUserId);
 
     // convert edges to CoffeeCountSimplified format
     const simplifiedCoffeeCounts = edges.map(edge => {
@@ -66,7 +37,50 @@ export const simplifyCoffeeDebts = (users: Array<User>): Array<{ senderId: numbe
     });
 
     return simplifiedCoffeeCounts;
-}
+};
+
+/**
+ * Simplifies edges by iteratively applying max-flow algorithms to minimize transactions.
+ * @param edges - Array of edges representing debts
+ * @param maxUserId - The highest user ID to determine graph size
+ * @returns {Array<{from: number, to: number, count: number}>} Simplified array of edges
+ */
+export const simplifyEdges = (edges: Array<{ from: number; to: number; count: number; }>, maxUserId: number): Array<{ from: number; to: number; count: number; }> => {
+
+    // Create hash map of visited edges
+    const visitedEdges = new Set<string>();
+
+    let nextEdge = getNextEdge(edges, visitedEdges);
+
+    // Visit all edges and simplify debts by applying max-flow to that edge
+    while (nextEdge) {
+        // Create a graph with all the edges
+        const graph = new CustomDinic();
+        graph.init(nextEdge.from, nextEdge.to, maxUserId + 1);
+        edges.forEach(edge => {
+            graph.addEdge(edge.from, edge.to, edge.count);
+        });
+
+        // Get max-flow for the edge
+        const maxflow = graph.maxflow();
+
+        // Create residual graph only with forward edges
+        const new_edges = graph.residualGraphForward();
+
+        // Add a new edge with the maxflow value
+        if (maxflow > 0)
+            new_edges.push({ from: nextEdge.from, to: nextEdge.to, count: maxflow });
+
+        // Update the edges array for next iteration
+        edges = new_edges;
+
+        // Get next edge for next iteration
+        nextEdge = getNextEdge(edges, visitedEdges);
+    }
+
+    return edges;
+};
+
 
 /**
  * Processes the user data into an array of edges of an asymmetric graph.
