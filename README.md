@@ -79,8 +79,8 @@ The algorithm operates as follows.
 2. **Iterative Simplification:**
    - **Select an Edge:** Pick a non-visited edge `(u, v)` from the graph.
    - **Run Max-Flow:** Compute the maximum flow of coffees from `u` to `v` using [Dinic's algorithm](https://en.wikipedia.org/wiki/Dinic%27s_algorithm).
-   - **Update Residual Graph:** Create the residual graph with all unused forward edges and add the edge `(u,v) = g`, where `g` is the max-flow computed in the previous step. 
-   - Repeat the above steps until all edges have been visited.
+   - **Update Residual Graph:** Create the residual graph with only the unused forward edges and add the edge `(u,v) = g`, where `g` is the max-flow computed in the previous step. 
+   - Repeat the above steps using the residual graph of the previous iteration until all edges have been visited.
 
 The last residual graph represents the simplified debt structure, with the minimum number of edges required to settle debts.
 
