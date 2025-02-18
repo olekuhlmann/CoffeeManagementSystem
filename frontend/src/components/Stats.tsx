@@ -7,6 +7,7 @@ const Stats: React.FC = () => {
   const coffeesTotal = 122;
   const numberUsers = 10;
   const firstCoffeeDate = "7th August 2024";
+  const outstandingDebts = 3;
 
   const powerUsers: StatEntry[] = [
     { name: "Maggus", value: 50 },
@@ -65,6 +66,13 @@ const Stats: React.FC = () => {
         stat={firstCoffeeDate}
         description="Ole bought a coffee for Leon. This did defenitely happen."
       />
+
+        <SingleStatCard
+            title="Outstanding Debts"
+            stat={outstandingDebts}
+            description="We will never know who didn't pay their debt! ☕"/>
+
+
     </VStack>
   );
 };
