@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Box, Container, VStack, Spinner, Center } from "@chakra-ui/react";
+import { Container, Spinner, Center } from "@chakra-ui/react";
 import { useUsers } from "./hooks/useUsers";
 import { useLogs } from "./hooks/useLogs";
 import UserForm from "./components/UserForm";
 import CoffeeForm from "./components/CoffeeForm";
 import UserList from "./components/UserList";
-import MainHeading from "./components/MainHeading";
 import Accordion from "./components/Accordion";
-import CoffeeIcon from "./components/CoffeeIcon";
 import Log from "./components/Log";
 import Login from "./components/Login";
 import { isAuthenticated } from "./services/authService";
+import Layout from "./Layout";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,13 +64,8 @@ const App: React.FC = () => {
   }
 
   return (
-    <Container maxW="container.md" p={4} mb={20}>
-      <Box textAlign="center" fontSize="xl">
-        <MainHeading>
-          Coffee Management System (CMS) <CoffeeIcon />
-        </MainHeading>
-        <VStack spacing={4} mt={10}>
-          <CoffeeForm
+    <Layout>
+      <CoffeeForm
             users={users}
             selectedUser={selectedUser}
             setSelectedUser={setSelectedUser}
@@ -95,9 +89,7 @@ const App: React.FC = () => {
               { label: "Logs", content: <Log logs={logs} /> },
             ]}
           />
-        </VStack>
-      </Box>
-    </Container>
+    </Layout>
   );
 };
 
