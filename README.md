@@ -1,6 +1,6 @@
 # CoffeeManagementSystem
 
-Everyone knows the struggle: You're sitting at R1 at CERN and it's coffee time. Your friend graciously goes to the coffee machine and buys a coffee for you. The next day, another friend buys a coffee for you. You buy a coffee for third friend. All overview is lost. Carnage ensues. 
+Everyone knows the struggle: You're sitting at R1 at CERN and it's coffee time. Your friend graciously goes to the coffee machine and buys a coffee for you. The next day, another friend buys a coffee for you. You buy a coffee for a third friend. All overview is lost. Carnage ensues. 
 
 This is where the Coffe Management System (CMS) comes in. This web application allows for easy tracking of who has bought coffees for whom, similar to money-tracking apps like [Splitwise](https://www.splitwise.com/).
 
