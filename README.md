@@ -1,6 +1,6 @@
 # CoffeeManagementSystem
 
-Everyone knows this issue: You're sitting at R1 at CERN and it's coffee time. Your friend graciously goes to the coffee machine and buys a coffee for you. The next day, another friend buys a coffee for you. You buy a coffee for another friend. All overview is lost. Carnage ensues. 
+Everyone knows the struggle: You're sitting at R1 at CERN and it's coffee time. Your friend graciously goes to the coffee machine and buys a coffee for you. The next day, another friend buys a coffee for you. You buy a coffee for third friend. All overview is lost. Carnage ensues. 
 
 This is where the Coffe Management System (CMS) comes in. This web application allows for easy tracking of who has bought coffees for whom, similar to money-tracking apps like [Splitwise](https://www.splitwise.com/).
 
@@ -34,7 +34,7 @@ For a local installation, follow these steps.
 
 Upon entering the web application for the first time, you will be prompted to enter the ```SECRET_PASSWORD``` used above. A secure token will be saved in the browser for 90 days to allow access without entering the password.
 
-For deployment to a hosting service, replace the appropiate HTTP endpoints in the frontend & backend and follow the necessary steps outlined by the hosting service.
+For deployment to a hosting service, set `IS_LOCAL` to `false`, replace the appropiate HTTP endpoints in the frontend & backend, and follow the necessary steps outlined by the hosting service.
 The CMS is deployed to AWS with an API Gateway, serverless Lambda function, and PostgreSQL database. The frontend is hosted using GitHub Pages.
 
 ## Demo
@@ -89,7 +89,7 @@ Dinic's algorithm has a complexity of `O(V^2E)`. Since we iterate over all edges
 ## Author
 
 Ole Kuhlmann  
-Email: [tim.ole.kuhlmann@cern.ch](mailto:tim.ole.kuhlmann@cern.ch)  
+Email: [ole.kuhlmann@rwth-aachen.de](mailto:ole.kuhlmann@rwth-aachen.de)  
 GitHub: [ThatTilux](https://github.com/ThatTilux)
 
 Developed with ❤️ and ☕ at CERN.
