@@ -4,19 +4,19 @@ import { VStack } from "@chakra-ui/react";
 import { SingleStatCard } from "./SingleStatCard";
 
 const Stats: React.FC = () => {
-  const coffeesTotal = 122;
+  const coffeesTotal = 140;
   const numberUsers = 10;
   const firstCoffeeDate = "7th August 2024";
-  const outstandingDebts = 3;
+  const outstandingDebts = 8;
 
   const powerUsers: StatEntry[] = [
-    { name: "Maggus", value: 50 },
-    { name: "Nick", value: 42 },
-    { name: "Vinni", value: 40 },
+    { name: "Maggus", value: 62 },
+    { name: "Nick", value: 55 },
+    { name: "Vinni", value: 48 },
   ];
 
   const coffeeRelationships: StatEntry[] = [
-    { name: "Maggus & Nick", value: 31 },
+    { name: "Maggus & Nick", value: 41 },
     { name: "Leon & Vinni", value: 13 },
     { name: "Leon & Ole", value: 12 },
   ];
@@ -70,7 +70,7 @@ const Stats: React.FC = () => {
         <SingleStatCard
             title="Outstanding Debts"
             stat={outstandingDebts}
-            description="We will never know who didn't pay their debt! ☕"/>
+            description="Who would just leave their coffee debt unsettled... 😢"/>
 
 
     </VStack>
