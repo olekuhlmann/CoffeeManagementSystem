@@ -38,7 +38,7 @@ export const TopThreeStat: React.FC<TopThreeStatProps> = ({ entries }) => {
   return (
     <Grid templateColumns="repeat(3, 1fr)" textAlign="center" gap={0}>
       {/* Row 1: Medals */}
-      {entries.map((entry, index) => (
+      {entries.map((_, index) => (
         <GridItem key={`medal-${index}`}>
           <Text fontSize="3xl">{medals[index]}</Text>
         </GridItem>
