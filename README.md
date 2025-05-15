@@ -90,7 +90,7 @@ Dinic's algorithm has a complexity of `O(V^2E)`. Since we iterate over all edges
 
 Ole Kuhlmann  
 Email: [ole.kuhlmann@rwth-aachen.de](mailto:ole.kuhlmann@rwth-aachen.de)  
-GitHub: [ThatTilux](https://github.com/ThatTilux)
+GitHub: [olekuhlmann](https://github.com/olekuhlmann)
 
 Developed with ❤️ and ☕ at CERN.
 
