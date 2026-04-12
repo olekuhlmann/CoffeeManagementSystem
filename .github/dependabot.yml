@@ -1,0 +1,14 @@
+# .github/dependabot.yml
+version: 2
+updates:
+  # Maintain dependencies for the Backend
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+
+  # Maintain dependencies for the Frontend
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
