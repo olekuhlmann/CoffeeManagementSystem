@@ -12,7 +12,7 @@
     "deploy": "gh-pages -d dist -r https://github.com/ThatTilux/CoffeeManagementSystem.git"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "^3.34.0",
     "@emotion/react": "^11.12.0",
     "@emotion/styled": "^11.12.0",
